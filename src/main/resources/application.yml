@@ -1,0 +1,15 @@
+server:
+  port: 9128
+custom:
+  jwt-secret: "5jbYUM3b2CicnbQG8VvdeBclxua6mrkGDF10KuKUq1AAi7aZEg4Mmbg14qnChdze"
+  
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/NomNomExpress
+    username: negiG
+    password: negiG@pswd123
+  jpa:
+    hibernate.ddl-auto: none
+    generate-ddl: false
+    show-sql: false
