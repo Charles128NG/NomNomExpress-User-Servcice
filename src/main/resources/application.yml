@@ -4,6 +4,14 @@ custom:
   jwt-secret: "5jbYUM3b2CicnbQG8VvdeBclxua6mrkGDF10KuKUq1AAi7aZEg4Mmbg14qnChdze"
   
 spring:
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    template:
+      default-topic: my-topic
+      
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/NomNomExpress

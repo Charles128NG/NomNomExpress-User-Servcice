@@ -1,5 +1,7 @@
 package com.Negi.NomNomExpress.controller;
 
+import java.util.concurrent.CompletableFuture;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Negi.NomNomExpress.Dao.AuthResponse;
+import com.Negi.NomNomExpress.Dao.KafkaMessageBody;
 import com.Negi.NomNomExpress.Dao.LoginDao;
 import com.Negi.NomNomExpress.Dao.TestPojo;
 import com.Negi.NomNomExpress.Dao.UpdateRoleDao;
 import com.Negi.NomNomExpress.entity.UserEntity;
 import com.Negi.NomNomExpress.exceptions.RESTException;
+import com.Negi.NomNomExpress.kafka.KafkaProducerService;
 import com.Negi.NomNomExpress.security.JWTUtil;
 import com.Negi.NomNomExpress.service.UserService;
 
@@ -27,6 +31,9 @@ public class UserController {
 	
 	@Autowired
 	private AuthenticationManager autenticationManager;
+	
+	@Autowired
+	private KafkaProducerService kafkaProd;
 	
 	@Autowired
 	private JWTUtil jwtUtil;
@@ -43,6 +50,13 @@ public class UserController {
 		}
 		try {
 			userService.registerUser(user);
+			CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+				kafkaProd.sendMessage(new KafkaMessageBody(user));
+			}).exceptionally(ex -> {
+				ex.printStackTrace();
+				return null;
+			});
+			
 			return new ResponseEntity<>("User registered successfuly", HttpStatus.OK);
 		}catch(Exception e) {
 			throw new RESTException(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
