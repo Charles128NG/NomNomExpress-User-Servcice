@@ -50,12 +50,11 @@ public class UserController {
 		}
 		try {
 			userService.registerUser(user);
-			CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-				kafkaProd.sendMessage(new KafkaMessageBody(user));
-			}).exceptionally(ex -> {
-				ex.printStackTrace();
-				return null;
-			});
+			/*
+			 * CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+			 * kafkaProd.sendMessage(new KafkaMessageBody(user)); }).exceptionally(ex -> {
+			 * ex.printStackTrace(); return null; });
+			 */
 			
 			return new ResponseEntity<>("User registered successfuly", HttpStatus.OK);
 		}catch(Exception e) {

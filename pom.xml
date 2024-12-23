@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.Negi</groupId>
-	<artifactId>NomNomExpress</artifactId>
+	<artifactId>NomNomExpress-User-Service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>NomNomExpress</name>
+	<name>NomNomExpress-User-Service</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
@@ -100,6 +100,7 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<!--<finalName>NomNomExpress-User-Service</finalName>-->
 		</plugins>
 	</build>
 	<repositories>
